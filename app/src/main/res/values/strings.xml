@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">OllamaDroid</string>
+    <string name="ollama_api_url">Ollama API URL</string>
+    <string name="enter_the_ollama_api_url">Enter the Ollama API URL</string>
+    <string name="chat_title">OllamaDroid</string>
+    <string name="type_message_hint">Message</string>
+    <string name="send">Send</string>
+    <string name="enter">Enter</string>
+    <string name="system_prompt">System Prompt</string>
+    <string name="enter_system_prompt">Enter System Prompt</string>
+    <string name="username">Username</string>
+    <string name="enter_username">Enter Username</string>
+    <string name="select_model">Select Model</string>
+    <string name="profile_picture">Profile Picture</string>
+    <string name="select_picture">Select Picture</string>
+    <string name="save">Save</string>
+    <string name="go_to_chat">Go to Chat</string>
+    <string name="connection_test_successful">Connection Test Successful</string>
+    <string name="connection_test_failed">Connection Test Failed</string>
+    <string name="ollamadroid">OllamaDroid</string>
+    <string name="stop">Stop</string>
+</resources>

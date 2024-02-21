@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <androidx.appcompat.widget.Toolbar
+        android:id="@+id/toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="?attr/actionBarSize"
+        android:background="?attr/colorPrimary"
+        android:theme="?attr/actionBarTheme"
+        android:elevation="4dp"
+        android:layout_alignParentTop="true">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="20dp"
+            android:text="@string/ollamadroid"/>
+        <ImageButton
+            android:id="@+id/buttonSettings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="right"
+            android:src="@drawable/settings_fill1_wght100_grad_25_opsz40"
+            android:background="?attr/selectableItemBackgroundBorderless"
+            android:contentDescription="Settings" />
+
+    </androidx.appcompat.widget.Toolbar>
+
+    <!-- Connection Status Layout -->
+    <LinearLayout
+        android:id="@+id/layoutConnectionStatus"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        android:orientation="vertical">
+
+        <!-- Image to show connection status -->
+        <ImageView
+            android:id="@+id/imageConnectionStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/close_fill0_wght700_grad200_opsz48"
+            android:layout_gravity="center_horizontal"
+            android:contentDescription="Connection Status" />
+
+        <!-- Text to display connection status -->
+        <TextView
+            android:id="@+id/textConnectionStatus"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Disconnected"
+            android:textSize="18sp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="16dp" />
+        <Button
+            android:id="@+id/goToChatButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="@string/go_to_chat"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+</RelativeLayout>

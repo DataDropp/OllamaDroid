@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <!-- Ollama API URL Field -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/ollama_api_url" />
+
+    <EditText
+        android:id="@+id/editOllamaAPIURL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_the_ollama_api_url"
+        android:inputType="text|textUri"
+        android:minHeight="48dp" />
+
+    <!-- Spinner for Selecting Model -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/select_model" />
+
+    <Spinner
+        android:id="@+id/spinnerModels"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:minHeight="48dp"
+        android:background="?android:colorBackground" />
+
+    <!-- System Prompt Setting -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/system_prompt" />
+
+    <EditText
+        android:id="@+id/editSystemPrompt"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_system_prompt"
+        android:minHeight="48dp" />
+
+    <!-- Username Field -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/username" />
+
+    <EditText
+        android:id="@+id/editUsername"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:hint="@string/enter_username"
+        android:minHeight="48dp" />
+
+
+    <!-- Profile Picture Selection -->
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/profile_picture" />
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- ImageView to display selected image -->
+        <ImageView
+            android:id="@+id/imageViewProfilePicture"
+            android:layout_width="151dp"
+            android:layout_height="151dp"
+            android:scaleType="centerCrop"
+            android:src="@drawable/baseline_account_circle_24" />
+
+        <!-- Button to trigger file selection -->
+        <Button
+            android:id="@+id/buttonSelectPicture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/select_picture" />
+    </LinearLayout>
+    <Button
+        android:id="@+id/buttonSave"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:text="@string/save"
+        />
+</LinearLayout>
