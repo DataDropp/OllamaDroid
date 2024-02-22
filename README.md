@@ -5,14 +5,14 @@ Ollama + Android = OllamaDroid
 
 |  |  |  |
 |--|--|--|
-| [Image](https://i.imgur.com/NnB4wmY.png)  | [Image](https://i.imgur.com/Db7DAke.png) | [Image](https://i.imgur.com/1MpnV8a.png) |
+| ![Image](https://i.imgur.com/NnB4wmY.png)  | ![Image](https://i.imgur.com/Db7DAke.png) | ![Image](https://i.imgur.com/1MpnV8a.png) |
 
 ## Features
 
 - [x] Text streaming responses
 - [ ] Profile customization
-    - [x] Custom username
-    - [ ] Custom profile picture
+  - [x] Custom username
+  - [ ] Custom profile picture
 - [ ] System prompt implementation
 - [x] Model selection
 - [ ] Dark theme / Light theme
