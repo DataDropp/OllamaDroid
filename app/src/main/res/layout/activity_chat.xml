@@ -18,6 +18,13 @@
             android:textColor="@android:color/white"
             android:textSize="20dp"
             android:text="@string/ollamadroid"/>
+        <TextView
+            android:id="@+id/modelName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="@android:color/white"
+            android:textSize="16dp"
+            android:text=""/>
         <ImageButton
             android:id="@+id/buttonSettings"
             android:layout_width="wrap_content"

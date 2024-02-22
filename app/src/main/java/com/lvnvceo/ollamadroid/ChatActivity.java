@@ -11,7 +11,6 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.arch.core.internal.SafeIterableMap;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -47,6 +46,16 @@ public class ChatActivity extends AppCompatActivity {
     private static final String MODEL_KEY = "model";
     private static final String OLLAMA_URL_KEY = "ollama_url";
     private List<ChatMessage> messages =new ArrayList<>();
+    private TextView modelTextView;
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SETTINGS_KEY, MODE_PRIVATE);
+
+        modelTextView.setText(sharedPreferences.getString(MODEL_KEY,""));
+
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,7 +65,7 @@ public class ChatActivity extends AppCompatActivity {
         recyclerView = findViewById(R.id.recycler_view);
         settingsButton = findViewById(R.id.buttonSettings);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
-
+        modelTextView = findViewById(R.id.modelName);
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SETTINGS_KEY, MODE_PRIVATE);
         messages.add(new ChatMessage(R.drawable.ic_launcher_foreground,"AI", sharedPreferences.getString(MODEL_KEY, null)));
@@ -89,8 +98,6 @@ public class ChatActivity extends AppCompatActivity {
             adapter.notifyItemInserted(messages.size() - 1);
             recyclerView.smoothScrollToPosition(messages.size() - 1);
             llamaMessages.messages.add(new Messages.Message("user", editTextMessage.getText().toString()));
-            System.out.println(gson.toJson(llamaMessages, Messages.class));
-
             ChatRequest chatRequest = new ChatRequest(sharedPreferences.getString(MODEL_KEY, ""), llamaMessages.messages, true);
             RequestBody body = RequestBody.create(gson.toJson(chatRequest), MediaType.parse("application/json"));
             Request request = new Request.Builder()

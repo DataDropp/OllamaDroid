@@ -16,6 +16,8 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -35,6 +37,11 @@ public class MainActivity extends AppCompatActivity {
     Button goToChatButton;
     private EditText editOllamaURL;
     @Override
+    protected void onResume() {
+        super.onResume();
+        getConnectionStatus();
+    }
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -50,52 +57,60 @@ public class MainActivity extends AppCompatActivity {
             Intent chatIntent = new Intent(MainActivity.this,ChatActivity.class);
             startActivity(chatIntent);
         });
-        String ollamaURLStr = getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE).getString("ollama_url", "");
-        URL ollamaURL = null;
-        try {
-            ollamaURL = new URL(ollamaURLStr);
-            Request request = new Request.Builder()
-                    .url(ollamaURL)
-                    .build();
-            client.newCall(request).enqueue(new Callback() {
-                @Override
-                public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                    runOnUiThread(() -> {
-                        displayError();
-                        e.printStackTrace();
-                    });
-                }
-
-                @Override
-                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                    if(!response.isSuccessful()) {
-                        runOnUiThread(() -> {
-                            displayError();
-                        });
-                        throw new IOException("Unexpected code " + response);
-                    } else {
-                        String responseData = response.body().string();
-                        runOnUiThread(() -> {
-                            System.out.println(response.code());
-
-                            displayOK();
-                        });
-                    }
-                }
-            });
-
-        } catch (MalformedURLException ignored) {
-        }
+        getConnectionStatus();
 
     }
     private void displayError() {
         connectionStatusImage.setImageResource(R.drawable.close_fill0_wght700_grad200_opsz48);
         connectionStatusText.setText(R.string.connection_test_failed);
+        goToChatButton.setVisibility(View.INVISIBLE);
     }
     private void displayOK() {
         connectionStatusImage.setImageResource(R.drawable.check_fill0_wght700_grad200_opsz48);
         connectionStatusText.setText(R.string.connection_test_successful);
         goToChatButton.setVisibility(View.VISIBLE);
+
+    }
+    private void getConnectionStatus() {
+        String ollamaURLStr = getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE).getString("ollama_url", null);
+
+        URL ollamaURL;
+        try {
+            ollamaURL = new URL(ollamaURLStr);
+        } catch (MalformedURLException ignored) {
+            Snackbar.make(findViewById(R.id.textConnectionStatus),"Invalid URL",2)
+                    .show();
+            return;
+        }
+        if(ollamaURL.getHost().equals("")) {
+            return;
+        }
+        Request request = new Request.Builder()
+                .url(ollamaURL)
+                .build();
+        client.newCall(request).enqueue(new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                runOnUiThread(() -> {
+                    displayError();
+                    e.printStackTrace();
+                });
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(!response.isSuccessful()) {
+                    runOnUiThread(() -> {
+                        displayError();
+                    });
+                    throw new IOException("Unexpected code " + response);
+                } else {
+                    runOnUiThread(() -> {
+                        displayOK();
+                    });
+                }
+            }
+        });
 
     }
 }
