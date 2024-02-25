@@ -68,7 +68,6 @@ public class ChatActivity extends AppCompatActivity {
         modelTextView = findViewById(R.id.modelName);
 
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SETTINGS_KEY, MODE_PRIVATE);
-        messages.add(new ChatMessage(R.drawable.ic_launcher_foreground,"AI", sharedPreferences.getString(MODEL_KEY, null)));
         adapter = new ChatAdapter(messages);
         recyclerView.setAdapter(adapter);
 
