@@ -24,7 +24,8 @@
             android:layout_height="wrap_content"
             android:textColor="@android:color/white"
             android:textSize="16dp"
-            android:text=""/>
+            android:text=""
+            android:maxLength="24"/>
         <ImageButton
             android:id="@+id/buttonSettings"
             android:layout_width="wrap_content"
