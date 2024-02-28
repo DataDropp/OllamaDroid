@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -71,6 +73,26 @@ public class SettingsActivity extends AppCompatActivity {
             editor.apply();
             finish();
         });
+        ollamaAPIURL.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                try {
+                    getModels(new URL(ollamaAPIURL.getText().toString()));
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         modelSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -78,27 +100,17 @@ public class SettingsActivity extends AppCompatActivity {
                 model = parent.getItemAtPosition(position).toString();
                 ((TextView) parent.getChildAt(0)).setTextColor(getColor(com.google.android.material.R.color.design_default_color_on_primary));
             }
-
             @Override
             public void onNothingSelected(AdapterView<?> parent) {
-
             }
         });
-        getModels();
-
-    }
-    private void getModels() {
-        if (sharedPreferences.getString(getString(R.string.ollama_url_key), null) == null) {
-            return;
-        }
-        URL ollamaURL;
         try {
-            ollamaURL = new URL(sharedPreferences.getString(getString(R.string.ollama_url_key), null));
+            getModels(new URL(sharedPreferences.getString(getString(R.string.ollama_url_key),"")));
         } catch (MalformedURLException e) {
-            Snackbar.make(findViewById(R.id.editSystemPrompt), "Invalid URL", 2)
-                    .show();
-            return;
+            e.printStackTrace();
         }
+    }
+    private void getModels(URL ollamaURL) {
         if(ollamaURL.getHost().equals("")) {
             return;
         }
