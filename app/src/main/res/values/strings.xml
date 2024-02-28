@@ -19,4 +19,9 @@
     <string name="connection_test_failed">Connection Test Failed</string>
     <string name="ollamadroid">OllamaDroid</string>
     <string name="stop">Stop</string>
+    <string name="system_prompt_key">system_prompt</string>
+    <string name="ollama_url_key">ollama_url</string>
+    <string name="username_key">username</string>
+    <string name="settings_key">settings</string>
+    <string name="model_key">model</string>
 </resources>

@@ -5,6 +5,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -45,6 +46,7 @@ public class ChatActivity extends AppCompatActivity {
     private static final String SETTINGS_KEY = "settings";
     private static final String MODEL_KEY = "model";
     private static final String OLLAMA_URL_KEY = "ollama_url";
+    private static final String SYSTEM_PROMPT = "system_prompt";
     private List<ChatMessage> messages =new ArrayList<>();
     private TextView modelTextView;
 
@@ -52,8 +54,9 @@ public class ChatActivity extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SETTINGS_KEY, MODE_PRIVATE);
-
         modelTextView.setText(sharedPreferences.getString(MODEL_KEY,""));
+        messages.clear();
+        llamaMessages.messages.clear();
 
     }
 

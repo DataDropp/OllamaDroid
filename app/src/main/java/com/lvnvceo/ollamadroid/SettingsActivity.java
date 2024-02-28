@@ -55,19 +55,19 @@ public class SettingsActivity extends AppCompatActivity {
         username = findViewById(R.id.editUsername);
         modelSpinner = findViewById(R.id.spinnerModels);
 
-        sharedPreferences = getApplicationContext().getSharedPreferences("settings", Context.MODE_PRIVATE);
-        systemPrompt.setText(sharedPreferences.getString("system_prompt", null));
-        ollamaAPIURL.setText(sharedPreferences.getString("ollama_url",null));
-        username.setText(sharedPreferences.getString("username", null));
+        sharedPreferences = getApplicationContext().getSharedPreferences(getString(R.string.settings_key), Context.MODE_PRIVATE);
+        systemPrompt.setText(sharedPreferences.getString(getString(R.string.system_prompt_key), null));
+        ollamaAPIURL.setText(sharedPreferences.getString(getString(R.string.ollama_url_key),null));
+        username.setText(sharedPreferences.getString(getString(R.string.username_key), null));
 
-        System.out.println(sharedPreferences.getString("ollama_url", "fdsfsafsa"));
+        System.out.println(sharedPreferences.getString(getString(R.string.ollama_url_key), ""));
         saveButton.setOnClickListener(v -> {
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
-            editor.putString("ollama_url", ollamaAPIURL.getText().toString());
-            editor.putString("system_prompt", systemPrompt.getText().toString());
-            editor.putString("username", username.getText().toString().equals("") ? "John Doe":username.getText().toString());
-            editor.putString("model", model);
+            editor.putString(getString(R.string.ollama_url_key), ollamaAPIURL.getText().toString());
+            editor.putString(getString(R.string.system_prompt_key), systemPrompt.getText().toString());
+            editor.putString(getString(R.string.username_key), username.getText().toString().equals("") ? "John Doe":username.getText().toString());
+            editor.putString(getString(R.string.model_key), model);
             editor.apply();
             finish();
         });
@@ -88,12 +88,12 @@ public class SettingsActivity extends AppCompatActivity {
 
     }
     private void getModels() {
-        if (sharedPreferences.getString("ollama_url", null) == null) {
+        if (sharedPreferences.getString(getString(R.string.ollama_url_key), null) == null) {
             return;
         }
         URL ollamaURL;
         try {
-            ollamaURL = new URL(sharedPreferences.getString("ollama_url", null));
+            ollamaURL = new URL(sharedPreferences.getString(getString(R.string.ollama_url_key), null));
         } catch (MalformedURLException e) {
             Snackbar.make(findViewById(R.id.editSystemPrompt), "Invalid URL", 2)
                     .show();
@@ -128,7 +128,7 @@ public class SettingsActivity extends AppCompatActivity {
                 runOnUiThread(() -> {
                     modelSpinner.setAdapter(arrayAdapter);
                     arrayAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-                    modelSpinner.setSelection(arrayAdapter.getPosition(sharedPreferences.getString("model", "")));
+                    modelSpinner.setSelection(arrayAdapter.getPosition(sharedPreferences.getString(getString(R.string.model_key), "")));
                 });
             }
         });
