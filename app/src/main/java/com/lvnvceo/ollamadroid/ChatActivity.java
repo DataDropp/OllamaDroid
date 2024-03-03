@@ -3,6 +3,7 @@ package com.lvnvceo.ollamadroid;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.NetworkOnMainThreadException;
 import android.text.Editable;
 import android.view.View;
 import android.view.ViewGroup;
@@ -73,7 +74,6 @@ public class ChatActivity extends AppCompatActivity {
         SharedPreferences sharedPreferences = getApplicationContext().getSharedPreferences(SETTINGS_KEY, MODE_PRIVATE);
         adapter = new ChatAdapter(messages);
         recyclerView.setAdapter(adapter);
-
         Button sendButton = findViewById(R.id.button_send);
         Button stopButton = findViewById(R.id.button_stop);
 
@@ -100,7 +100,7 @@ public class ChatActivity extends AppCompatActivity {
             adapter.notifyItemInserted(messages.size() - 1);
             recyclerView.smoothScrollToPosition(messages.size() - 1);
             llamaMessages.messages.add(new Messages.Message("user", editTextMessage.getText().toString()));
-            ChatRequest chatRequest = new ChatRequest(sharedPreferences.getString(MODEL_KEY, ""), llamaMessages.messages, true);
+            ChatRequest chatRequest = new ChatRequest(sharedPreferences.getString(MODEL_KEY, ""), llamaMessages.messages,true);
             RequestBody body = RequestBody.create(gson.toJson(chatRequest), MediaType.parse("application/json"));
             Request request = new Request.Builder()
                     .url(sharedPreferences.getString(OLLAMA_URL_KEY, "")+"/api/chat")
@@ -117,7 +117,6 @@ public class ChatActivity extends AppCompatActivity {
                 public void onResponse(Call call, Response response) throws IOException {
                     if (!response.isSuccessful()) {
                         handleResponseError(sendButton, stopButton);
-                        throw new IOException("Unexpected code " + response);
                     }
 
                     try (ResponseBody responseBody = response.body()) {
@@ -125,13 +124,10 @@ public class ChatActivity extends AppCompatActivity {
                             stopButton.setOnClickListener(v -> {
                                 try {
                                     response.close();
-                                } catch (IllegalStateException ignored) {
-                                }
-                            handleResponseError(sendButton,stopButton);
+                                } catch (NetworkOnMainThreadException ignored)  {}
+                                handleResponseError(sendButton,stopButton);
                             });
-
                             processResponseBody(responseBody, messages, sendButton, stopButton);
-
                         }
                     }
                 }
@@ -155,6 +151,7 @@ public class ChatActivity extends AppCompatActivity {
 
         try {
             while ((line = responseBody.source().readUtf8Line()) != null) {
+
                 chatResponse = gson.fromJson(line, ChatResponse.class);
                 fullResponse.append(chatResponse.message.content);
                 runOnUiThread(() -> {
@@ -171,7 +168,7 @@ public class ChatActivity extends AppCompatActivity {
             if (chatResponse.done) {
                 addMessage(chatResponse,fullResponse.toString(),stopButton,sendButton);
             }
-        } catch (IOException | IllegalStateException e) {
+        } catch (IOException | NumberFormatException | IllegalStateException e) {
             addMessage(chatResponse,fullResponse.toString(),stopButton,sendButton);
             e.printStackTrace();
         }
