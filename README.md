@@ -3,6 +3,10 @@
 
 Ollama + Android = OllamaDroid
 
+
+# THIS IS NO LONGER MAINTAINED
+
+context: I've been busy with irl stuff and work. I sadly am moving on to other projects. If you'd like make your own OllamaDroid project, fork it, recreate it, doesnt matter. Please, if you have an alternative to OllamaDroid, create an issue and ill post a link to that GitHub to redirect others.
 |  |  |  |
 |--|--|--|
 | ![Image](https://i.imgur.com/NnB4wmY.png)  | ![Image](https://i.imgur.com/Db7DAke.png) | ![Image](https://i.imgur.com/1MpnV8a.png) |
